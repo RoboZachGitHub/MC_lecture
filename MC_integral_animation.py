@@ -22,7 +22,7 @@ ax.plot(x_vals, sin_of_x(x_vals), color='black', lw=2)
 
 
 # create the MC data set
-mc_samples = 2000
+mc_samples = 10000
 
 rands_1 = np.random.random_sample([mc_samples])
 rands_2 = np.random.random_sample([mc_samples])
@@ -34,9 +34,9 @@ for i in range(mc_samples):
 	mc_data_x[i] = rands_1[i]*np.pi
 	mc_data_y[i] = rands_2[i]*1.0
 	if mc_data_y[i] <= sin_of_x(mc_data_x[i]):
-		mc_data_colors.append('r')
+		mc_data_colors.append('#33BEFF')
 	else:
-		mc_data_colors.append('b')
+		mc_data_colors.append('#4B7B92')
 
 mc_data_colors = np.array(mc_data_colors)
 
@@ -49,9 +49,9 @@ def init():
 	return scat
 
 def animate(i):
-	x = mc_data_x[:i]		
-	y = mc_data_y[:i]		
-	colors = mc_data_colors[:i]		
+	x = mc_data_x[:i*100]		
+	y = mc_data_y[:i*100]		
+	colors = mc_data_colors[:i*100]		
 
 	data = np.hstack(zip(x, y))
 
@@ -64,7 +64,7 @@ def animate(i):
 	scat.set_facecolors(colors)
 	return scat
 
-ani = animation.FuncAnimation(fig, animate, init_func=init, frames=np.arange(1,mc_samples),  interval=1,  blit=False, repeat=False)
+ani = animation.FuncAnimation(fig, animate, init_func=init, frames=np.arange(1,(mc_samples/100)),  interval=1,  blit=False, repeat=False)
 
 plt.show()
 
