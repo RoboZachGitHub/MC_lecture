@@ -1,0 +1,26 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def f(x):
+	return (4*np.sin(x) + 2*np.sin(3*np.pi*x))
+
+x_vals = np.arange(0.0, np.pi, 0.01)
+
+rands_1 = np.random.random_sample([100])
+rands_2 = np.random.random_sample([100])
+rand_xs = []
+rand_ys = []
+for x in rands_1:
+	rand_xs.append(x*np.pi)
+
+for y in rands_2:
+	rand_ys.append(y*6.0)
+
+plt.ylabel('4*sinx + 2*sin3x')
+plt.xlabel('x')
+plt.plot(x_vals, f(x_vals))
+plt.plot(rand_xs, rand_ys, marker='o')
+plt.show()
+
+
