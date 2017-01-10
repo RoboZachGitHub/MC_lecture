@@ -22,7 +22,7 @@ ax.plot(x_vals, sin_of_x(x_vals), color='black', lw=2)
 
 
 # create the MC data set
-mc_samples = 300
+mc_samples = 2000
 
 rands_1 = np.random.random_sample([mc_samples])
 rands_2 = np.random.random_sample([mc_samples])
@@ -40,19 +40,31 @@ for i in range(mc_samples):
 
 mc_data_colors = np.array(mc_data_colors)
 
-scatter = ax.scatter(mc_data_x, mc_data_y, color=mc_data_colors)
 
-#scatter = ax.scatter([], [], [])
-#
-#def animate(frames):
-#	
-#	
-#
-#	scatter(mc_data_x[:frames], mc_data_y[:frames])
-#	return scatter
-#
-#
-#ani = animation.FuncAnimation(fig, animate, frames=mc_samples,  interval=1000,  blit=False, repeat=False)
+# Construct the scatter plot to update during animation
+scat = ax.scatter([], [])
+
+def init():
+	scat.set_offsets([])
+	return scat
+
+def animate(i):
+	x = mc_data_x[:i]		
+	y = mc_data_y[:i]		
+	colors = mc_data_colors[:i]		
+
+	data = np.hstack(zip(x, y))
+
+
+	print data
+	print "\n\n"
+
+	scat.set_offsets(data)
+	scat.set_edgecolors(colors)
+	scat.set_facecolors(colors)
+	return scat
+
+ani = animation.FuncAnimation(fig, animate, init_func=init, frames=np.arange(1,mc_samples),  interval=1,  blit=False, repeat=False)
 
 plt.show()
 
